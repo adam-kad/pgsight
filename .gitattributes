@@ -1,0 +1,6 @@
+# Keep LF everywhere: golden files are compared byte for byte, and Windows
+# checkouts would otherwise turn them into CRLF.
+* text=auto eol=lf
+
+*.gif binary
+*.png binary
