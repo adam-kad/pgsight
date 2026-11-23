@@ -13,10 +13,12 @@ import (
 // and the list of hints. Colors come from the theme; with a colorless theme
 // the output is plain text suitable for CI logs.
 func Plain(w io.Writer, p *plan.Plan, hints []analyze.Hint, t *Theme) error {
+	// bufio.Writer remembers the first write error and Flush returns it,
+	// so individual writes need no checks.
 	bw := bufio.NewWriter(w)
 	line := func(s string) {
-		bw.WriteString(strings.TrimRight(s, " "))
-		bw.WriteByte('\n')
+		_, _ = bw.WriteString(strings.TrimRight(s, " "))
+		_ = bw.WriteByte('\n')
 	}
 
 	warnings, infos := CountHints(hints)

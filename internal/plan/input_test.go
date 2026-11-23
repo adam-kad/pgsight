@@ -1,6 +1,7 @@
 package plan
 
 import (
+	"errors"
 	"strings"
 	"testing"
 )
@@ -98,7 +99,7 @@ func TestDetect(t *testing.T) {
 
 func TestParseEmpty(t *testing.T) {
 	for _, in := range []string{"", "   \n", " QUERY PLAN\n------\n(0 rows)\n"} {
-		if _, err := Parse(strings.NewReader(in)); err != ErrEmpty {
+		if _, err := Parse(strings.NewReader(in)); !errors.Is(err, ErrEmpty) {
 			t.Errorf("Parse(%q) error = %v, want ErrEmpty", in, err)
 		}
 	}

@@ -1,0 +1,39 @@
+version: "2"
+
+linters:
+  # errcheck, govet, ineffassign, staticcheck and unused are on by default.
+  enable:
+    - errorlint   # error wrapping and comparison with errors.Is/As
+    - gocritic    # bug-prone and non-idiomatic constructs
+    - misspell    # typos in comments and strings
+    - nolintlint  # //nolint directives must be specific and justified
+    - revive      # style, successor of golint
+    - unconvert   # unnecessary type conversions
+    - unparam     # unused function parameters and results
+  settings:
+    errcheck:
+      exclude-functions:
+        # Writes to stderr/stdout for diagnostics; nothing useful to do on failure.
+        - fmt.Fprintln
+        - fmt.Fprintf
+    revive:
+      rules:
+        - name: exported
+        - name: package-comments
+        - name: var-naming
+        - name: indent-error-flow
+        - name: errorf
+        - name: unused-parameter
+        - name: unreachable-code
+  exclusions:
+    presets:
+      - std-error-handling
+    rules:
+      # Tests may ignore errors from Close and similar cleanup.
+      - path: _test\.go
+        linters: [errcheck]
+
+formatters:
+  enable:
+    - gofmt
+    - goimports

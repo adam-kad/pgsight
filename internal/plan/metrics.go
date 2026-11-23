@@ -6,10 +6,10 @@ import "strings"
 type Metric int
 
 const (
-	// MetricTime: wall-clock milliseconds from EXPLAIN ANALYZE.
+	// MetricTime means values are wall-clock milliseconds from EXPLAIN ANALYZE.
 	MetricTime Metric = iota
-	// MetricCost: planner cost units, used when there is no timing data
-	// (plain EXPLAIN, or ANALYZE with TIMING OFF).
+	// MetricCost means values are planner cost units, used when there is no
+	// timing data (plain EXPLAIN, or ANALYZE with TIMING OFF).
 	MetricCost
 )
 

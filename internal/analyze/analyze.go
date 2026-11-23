@@ -238,12 +238,13 @@ func checkRowEstimate(c *Context, n *plan.Node) *Hint {
 	}
 
 	var msg string
-	if under {
+	switch {
+	case under:
 		msg = fmt.Sprintf("Planner expected %s rows but got %s (%sx underestimate)",
 			count(n.PlanRows), count(n.Actual.Rows), ratio(r))
-	} else if n.Actual.Rows == 0 {
+	case n.Actual.Rows == 0:
 		msg = fmt.Sprintf("Planner expected %s rows but got none", count(n.PlanRows))
-	} else {
+	default:
 		msg = fmt.Sprintf("Planner expected %s rows but got %s (%sx overestimate)",
 			count(n.PlanRows), count(n.Actual.Rows), ratio(n.PlanRows/n.Actual.Rows))
 	}

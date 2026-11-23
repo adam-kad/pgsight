@@ -42,7 +42,7 @@ func hintsFor(p *plan.Plan, rule string) []Hint {
 	return out
 }
 
-func expectOne(t *testing.T, hints []Hint, nodeType string, sev Severity, msg ...string) Hint {
+func expectOne(t *testing.T, hints []Hint, nodeType string, sev Severity, msg ...string) {
 	t.Helper()
 	if len(hints) != 1 {
 		t.Fatalf("got %d hints, want 1: %+v", len(hints), hints)
@@ -56,7 +56,6 @@ func expectOne(t *testing.T, hints []Hint, nodeType string, sev Severity, msg ..
 			t.Errorf("hint %q / %q does not mention %q", h.Message, h.Suggestion, m)
 		}
 	}
-	return h
 }
 
 func expectNone(t *testing.T, hints []Hint) {
