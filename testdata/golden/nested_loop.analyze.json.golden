@@ -1,0 +1,13 @@
+EXPLAIN ANALYZE · json format
+Execution 19.7 ms · Planning 0.058 ms
+💡 1 warning
+
+     SELF      % SHARE       NODE
+  1.17 ms   5.9% ▋           Nested Loop 💡  40k rows (est 80k)
+  2.72 ms  13.8% █▍          ├─ Seq Scan on customers c  5.0k rows (est 15k)
+  15.0 ms  76.1% ███████▋    └─ Index Scan using orders_customer_id_idx on orders o  8 rows ×5.0k
+
+Hints
+  [warning] Nested Loop
+            Inner side (Index Scan using orders_customer_id_idx on orders o) ran 5,000 times
+            → Each loop must be cheap, ideally an index lookup. If the outer row count was underestimated, a Hash Join may be faster; check the estimates below this node.

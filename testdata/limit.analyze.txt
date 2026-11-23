@@ -1,0 +1,11 @@
+                                                             QUERY PLAN                                                              
+-------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=0.42..0.81 rows=10 width=23) (actual time=0.006..0.009 rows=10 loops=1)
+   Buffers: shared hit=33
+   ->  Index Scan using orders_pkey on orders  (cost=0.42..14031.59 rows=360564 width=23) (actual time=0.006..0.009 rows=10 loops=1)
+         Filter: (status = 'done'::text)
+         Buffers: shared hit=33
+ Planning Time: 0.014 ms
+ Execution Time: 0.013 ms
+(7 rows)
+

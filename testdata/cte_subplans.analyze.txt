@@ -1,0 +1,43 @@
+                                                                          QUERY PLAN                                                                          
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Hash Join  (cost=28985.86..36935.38 rows=193 width=76) (actual time=36.139..198.719 rows=199 loops=1)
+   Hash Cond: (b.customer_id = c.id)
+   Buffers: shared hit=405573
+   CTE big
+     ->  GroupAggregate  (cost=0.42..21365.94 rows=50378 width=36) (actual time=0.012..153.687 rows=50000 loops=1)
+           Group Key: orders.customer_id
+           Buffers: shared hit=400583
+           ->  Index Scan using orders_customer_id_idx on orders  (cost=0.42..18736.22 rows=400000 width=10) (actual time=0.006..115.799 rows=400000 loops=1)
+                 Buffers: shared hit=400583
+   InitPlan 2 (returns $1)
+     ->  Aggregate  (cost=7598.00..7598.01 rows=1 width=32) (actual time=36.044..36.044 rows=1 loops=1)
+           Buffers: shared hit=2598
+           ->  Seq Scan on orders orders_1  (cost=0.00..6598.00 rows=400000 width=6) (actual time=0.002..14.573 rows=400000 loops=1)
+                 Buffers: shared hit=2598
+   ->  CTE Scan on big b  (cost=0.00..1007.56 rows=50378 width=36) (actual time=0.012..158.660 rows=50000 loops=1)
+         Buffers: shared hit=400583
+   ->  Hash  (cost=18.32..18.32 rows=287 width=4) (actual time=0.045..0.046 rows=199 loops=1)
+         Buckets: 1024  Batches: 1  Memory Usage: 15kB
+         Buffers: shared hit=203
+         ->  Index Only Scan using customers_pkey on customers c  (cost=0.29..18.32 rows=287 width=4) (actual time=0.006..0.034 rows=199 loops=1)
+               Index Cond: (id < 200)
+               Heap Fetches: 298
+               Buffers: shared hit=203
+   SubPlan 3
+     ->  Aggregate  (cost=35.27..35.28 rows=1 width=8) (actual time=0.003..0.003 rows=1 loops=199)
+           Buffers: shared hit=2189
+           ->  Bitmap Heap Scan on orders o2  (cost=4.48..35.27 rows=1 width=0) (actual time=0.003..0.003 rows=1 loops=199)
+                 Recheck Cond: (customer_id = c.id)
+                 Filter: (status = 'pending'::text)
+                 Rows Removed by Filter: 7
+                 Heap Blocks: exact=1592
+                 Buffers: shared hit=2189
+                 ->  Bitmap Index Scan on orders_customer_id_idx  (cost=0.00..4.48 rows=8 width=0) (actual time=0.001..0.001 rows=8 loops=199)
+                       Index Cond: (customer_id = c.id)
+                       Buffers: shared hit=597
+ Planning:
+   Buffers: shared hit=15
+ Planning Time: 0.091 ms
+ Execution Time: 198.863 ms
+(39 rows)
+

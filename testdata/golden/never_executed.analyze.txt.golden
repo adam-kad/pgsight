@@ -1,0 +1,14 @@
+EXPLAIN ANALYZE · text format
+Execution 2.73 ms · Planning 0.056 ms
+💡 1 warning
+
+     SELF      % SHARE       NODE
+     0 ms   0.0%             Nested Loop  0 rows (est 5)
+  2.72 ms  99.7% ██████████  ├─ Seq Scan on customers c 💡  0 rows (est 1)
+        —   0.0%             └─ Bitmap Heap Scan on orders o  never executed
+        —   0.0%                └─ Bitmap Index Scan on orders_customer_id_idx  never executed
+
+Hints
+  [warning] Seq Scan on customers c
+            Filter removed 50,000 rows and kept 0 (0% of rows read)
+            → An index matching the filter could avoid reading the discarded rows: (country = 'XX'::text)

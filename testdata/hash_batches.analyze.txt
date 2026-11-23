@@ -1,0 +1,20 @@
+                                                         QUERY PLAN                                                         
+----------------------------------------------------------------------------------------------------------------------------
+ Hash Join  (cost=2384.43..11617.61 rows=108253 width=9) (actual time=7.340..50.540 rows=107198 loops=1)
+   Hash Cond: (o.customer_id = c.id)
+   Buffers: shared hit=3004, temp read=522 written=522
+   ->  Seq Scan on orders o  (cost=0.00..7598.00 rows=108253 width=10) (actual time=0.063..20.708 rows=107198 loops=1)
+         Filter: (created_at > '2023-01-01'::date)
+         Rows Removed by Filter: 292802
+         Buffers: shared hit=2598
+   ->  Hash  (cost=1155.08..1155.08 rows=74908 width=7) (actual time=7.007..7.007 rows=50000 loops=1)
+         Buckets: 16384  Batches: 8  Memory Usage: 375kB
+         Buffers: shared hit=406, temp written=146
+         ->  Seq Scan on customers c  (cost=0.00..1155.08 rows=74908 width=7) (actual time=0.003..2.959 rows=50000 loops=1)
+               Buffers: shared hit=406
+ Planning:
+   Buffers: shared hit=76
+ Planning Time: 0.185 ms
+ Execution Time: 52.797 ms
+(16 rows)
+

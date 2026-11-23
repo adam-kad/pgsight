@@ -1,0 +1,16 @@
+EXPLAIN ANALYZE · text format
+Execution 198.9 ms · Planning 0.091 ms
+No issues found
+
+     SELF      % SHARE       NODE
+  3.37 ms   1.7% ▏           Hash Join  199 rows (est 193)
+  37.9 ms  19.1% █▉          ├─ CTE big: GroupAggregate  50k rows (est 50k)
+ 115.8 ms  58.2% █████▉      │  └─ Index Scan using orders_customer_id_idx on orders  400k rows
+  21.5 ms  10.8% █▏          ├─ InitPlan 2 (returns $1): Aggregate  1 row
+  14.6 ms   7.3% ▊           │  └─ Seq Scan on orders orders_1  400k rows
+  4.97 ms   2.5% ▎           ├─ CTE Scan on big b  50k rows (est 50k)
+ 0.012 ms   0.0% ▏           ├─ Hash  199 rows (est 287)
+ 0.034 ms   0.0% ▏           │  └─ Index Only Scan using customers_pkey on customers c  199 rows (est 287)
+     0 ms   0.0%             └─ SubPlan 3: Aggregate  1 row ×199
+ 0.398 ms   0.2% ▏              └─ Bitmap Heap Scan on orders o2  1 row ×199
+ 0.199 ms   0.1% ▏                 └─ Bitmap Index Scan on orders_customer_id_idx  8 rows ×199

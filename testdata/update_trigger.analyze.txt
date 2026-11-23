@@ -1,0 +1,14 @@
+                                                           QUERY PLAN                                                           
+--------------------------------------------------------------------------------------------------------------------------------
+ Update on orders  (cost=0.42..23.95 rows=0 width=0) (actual time=2.451..2.451 rows=0 loops=1)
+   Buffers: shared hit=7028 dirtied=6 written=6
+   ->  Index Scan using orders_pkey on orders  (cost=0.42..23.95 rows=487 width=38) (actual time=0.004..0.042 rows=500 loops=1)
+         Index Cond: (id <= 500)
+         Buffers: shared hit=8
+ Planning:
+   Buffers: shared hit=4
+ Planning Time: 0.052 ms
+ Trigger orders_audit: time=1.078 calls=500
+ Execution Time: 3.556 ms
+(10 rows)
+

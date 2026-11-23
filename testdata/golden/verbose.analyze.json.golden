@@ -1,0 +1,7 @@
+EXPLAIN ANALYZE · json format
+Execution 0.237 ms · Planning 0.009 ms
+No issues found
+
+     SELF      % SHARE       NODE
+ 0.092 ms  38.8% ███▉        HashAggregate  5 rows
+ 0.141 ms  59.5% ██████      └─ Index Scan using customers_pkey on public.customers c  999 rows (est 1.5k)

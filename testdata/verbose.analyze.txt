@@ -1,0 +1,16 @@
+                                                                  QUERY PLAN                                                                   
+-----------------------------------------------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=47.75..47.80 rows=5 width=11) (actual time=0.243..0.243 rows=5 loops=1)
+   Output: country, count(*)
+   Group Key: c.country
+   Batches: 1  Memory Usage: 24kB
+   Buffers: shared hit=1009
+   ->  Index Scan using customers_pkey on public.customers c  (cost=0.29..40.47 rows=1456 width=3) (actual time=0.004..0.149 rows=999 loops=1)
+         Output: id, country, created_at
+         Index Cond: (c.id < 1000)
+         Buffers: shared hit=1009
+ Settings: max_parallel_workers_per_gather = '0', parallel_setup_cost = '0', parallel_tuple_cost = '0', random_page_cost = '1.1'
+ Planning Time: 0.013 ms
+ Execution Time: 0.250 ms
+(12 rows)
+

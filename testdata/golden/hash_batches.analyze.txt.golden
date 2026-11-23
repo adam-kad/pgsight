@@ -1,0 +1,17 @@
+EXPLAIN ANALYZE · text format
+Execution 52.8 ms · Planning 0.185 ms
+💡 2 warnings
+
+     SELF      % SHARE       NODE
+  22.8 ms  43.2% ████▍       Hash Join  107k rows (est 108k)
+  20.7 ms  39.2% ███▉        ├─ Seq Scan on orders o 💡  107k rows (est 108k)
+  4.05 ms   7.7% ▊           └─ Hash 💡  50k rows (est 75k)
+  2.96 ms   5.6% ▌              └─ Seq Scan on customers c  50k rows (est 75k)
+
+Hints
+  [warning] Seq Scan on orders o
+            Seq Scan on orders read 400,000 rows and kept 107,198 (27%)
+            → An index on the filtered columns may let PostgreSQL skip the rest: (created_at > '2023-01-01'::date)
+  [warning] Hash
+            Hash table was split into 8 batches and spilled to disk
+            → Increase work_mem so the hash table fits in memory (it used 375 kB per batch).

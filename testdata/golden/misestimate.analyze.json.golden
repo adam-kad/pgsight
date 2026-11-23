@@ -1,0 +1,14 @@
+EXPLAIN ANALYZE · json format
+Execution 3.74 ms · Planning 0.010 ms
+💡 2 warnings
+
+     SELF      % SHARE       NODE
+  3.71 ms  99.3% █████████▉  Seq Scan on correlated 💡  1.0k rows (est 12)
+
+Hints
+  [warning] Seq Scan on correlated
+            Planner expected 12 rows but got 1,000 (83x underestimate)
+            → Statistics may be stale: run ANALYZE correlated. If the filtered columns are correlated, CREATE STATISTICS can help the planner.
+  [warning] Seq Scan on correlated
+            Filter removed 99,000 rows and kept 1,000 (1.0% of rows read)
+            → An index matching the filter could avoid reading the discarded rows: ((a = 7) AND (b = 7))

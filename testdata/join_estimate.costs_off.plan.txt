@@ -1,0 +1,14 @@
+                        QUERY PLAN                         
+-----------------------------------------------------------
+ Sort
+   Sort Key: (sum(o.amount)) DESC
+   ->  HashAggregate
+         Group Key: c.country
+         ->  Hash Join
+               Hash Cond: (o.customer_id = c.id)
+               ->  Seq Scan on orders o
+                     Filter: (status <> 'cancelled'::text)
+               ->  Hash
+                     ->  Seq Scan on customers c
+(10 rows)
+
