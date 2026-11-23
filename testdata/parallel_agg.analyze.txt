@@ -1,0 +1,29 @@
+                                                                   QUERY PLAN                                                                   
+------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=7126.59..7126.68 rows=3 width=45) (actual time=37.352..38.227 rows=3 loops=1)
+   Group Key: status
+   Buffers: shared hit=2606
+   ->  Gather Merge  (cost=7126.59..7126.62 rows=3 width=45) (actual time=37.343..38.217 rows=6 loops=1)
+         Workers Planned: 1
+         Workers Launched: 1
+         Buffers: shared hit=2606
+         ->  Sort  (cost=7126.58..7126.58 rows=3 width=45) (actual time=34.349..34.349 rows=3 loops=2)
+               Sort Key: status
+               Sort Method: quicksort  Memory: 25kB
+               Buffers: shared hit=2606
+               Worker 0:  Sort Method: quicksort  Memory: 25kB
+               ->  Partial HashAggregate  (cost=7126.51..7126.55 rows=3 width=45) (actual time=34.059..34.061 rows=3 loops=2)
+                     Group Key: status
+                     Batches: 1  Memory Usage: 24kB
+                     Buffers: shared hit=2598
+                     Worker 0:  Batches: 1  Memory Usage: 24kB
+                     ->  Parallel Seq Scan on orders  (cost=0.00..5539.18 rows=211645 width=11) (actual time=0.007..16.043 rows=179800 loops=2)
+                           Filter: (amount > '10'::numeric)
+                           Rows Removed by Filter: 20200
+                           Buffers: shared hit=2598
+ Planning:
+   Buffers: shared hit=14 read=1
+ Planning Time: 0.070 ms
+ Execution Time: 38.245 ms
+(25 rows)
+

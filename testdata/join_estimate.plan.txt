@@ -1,0 +1,14 @@
+                                        QUERY PLAN                                        
+------------------------------------------------------------------------------------------
+ Sort  (cost=12733.02..12733.04 rows=5 width=35)
+   Sort Key: (sum(o.amount)) DESC
+   ->  HashAggregate  (cost=12732.90..12732.97 rows=5 width=35)
+         Group Key: c.country
+         ->  Hash Join  (cost=2091.43..10748.73 rows=396835 width=9)
+               Hash Cond: (o.customer_id = c.id)
+               ->  Seq Scan on orders o  (cost=0.00..7615.55 rows=396835 width=10)
+                     Filter: (status <> 'cancelled'::text)
+               ->  Hash  (cost=1155.08..1155.08 rows=74908 width=7)
+                     ->  Seq Scan on customers c  (cost=0.00..1155.08 rows=74908 width=7)
+(10 rows)
+

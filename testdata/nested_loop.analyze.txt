@@ -1,0 +1,15 @@
+                                                                QUERY PLAN                                                                 
+-------------------------------------------------------------------------------------------------------------------------------------------
+ Nested Loop  (cost=0.42..23640.03 rows=79468 width=10) (actual time=0.012..24.570 rows=40000 loops=1)
+   Buffers: shared hit=55406
+   ->  Seq Scan on customers c  (cost=0.00..1342.35 rows=14882 width=4) (actual time=0.005..2.777 rows=5000 loops=1)
+         Filter: (country = 'FR'::text)
+         Rows Removed by Filter: 45000
+         Buffers: shared hit=406
+   ->  Index Scan using orders_customer_id_idx on orders o  (cost=0.42..1.42 rows=8 width=10) (actual time=0.001..0.004 rows=8 loops=5000)
+         Index Cond: (customer_id = c.id)
+         Buffers: shared hit=55000
+ Planning Time: 0.068 ms
+ Execution Time: 25.395 ms
+(11 rows)
+

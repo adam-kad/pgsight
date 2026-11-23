@@ -1,0 +1,14 @@
+                                                     QUERY PLAN                                                      
+---------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=68429.28..69429.28 rows=400000 width=23) (actual time=307.124..376.251 rows=400000 loops=1)
+   Sort Key: amount DESC, created_at
+   Sort Method: external merge  Disk: 13496kB
+   Buffers: shared hit=2598, temp read=5055 written=5236
+   ->  Seq Scan on orders  (cost=0.00..6598.00 rows=400000 width=23) (actual time=0.003..15.207 rows=400000 loops=1)
+         Buffers: shared hit=2598
+ Planning:
+   Buffers: shared hit=10
+ Planning Time: 0.041 ms
+ Execution Time: 387.309 ms
+(10 rows)
+
