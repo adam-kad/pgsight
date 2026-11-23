@@ -8,16 +8,15 @@ import (
 )
 
 var (
-	costRe      = regexp.MustCompile(`\s*\(cost=([\d.]+)\.\.([\d.]+) rows=([\d.]+) width=(\d+)\)$`)
-	actualRe    = regexp.MustCompile(`\s*\(actual(?: time=([\d.]+)\.\.([\d.]+))? rows=([\d.]+) loops=([\d.]+)\)$`)
-	neverRe     = regexp.MustCompile(`\s*\(never executed\)$`)
-	labelRe     = regexp.MustCompile(`^(?:InitPlan \d+(?: \(returns [^)]*\))?|SubPlan \d+|CTE .+)$`)
-	triggerRe   = regexp.MustCompile(`^Trigger (.+?)(?: on (\S+))?: time=([\d.]+) calls=([\d.]+)$`)
-	msRe        = regexp.MustCompile(`^([\d.]+) ms$`)
-	jitTotalRe  = regexp.MustCompile(`Total ([\d.]+) ms`)
-	workerKeyRe = regexp.MustCompile(`^Worker \d+$`)
-	kbRe        = regexp.MustCompile(`^(\d+)kB$`)
-	originalRe  = regexp.MustCompile(`^(\d+)(?: \(originally (\d+)\))?$`)
+	costRe     = regexp.MustCompile(`\s*\(cost=([\d.]+)\.\.([\d.]+) rows=([\d.]+) width=(\d+)\)$`)
+	actualRe   = regexp.MustCompile(`\s*\(actual(?: time=([\d.]+)\.\.([\d.]+))? rows=([\d.]+) loops=([\d.]+)\)$`)
+	neverRe    = regexp.MustCompile(`\s*\(never executed\)$`)
+	labelRe    = regexp.MustCompile(`^(?:InitPlan \d+(?: \(returns [^)]*\))?|SubPlan \d+|CTE .+)$`)
+	triggerRe  = regexp.MustCompile(`^Trigger (.+?)(?: on (\S+))?: time=([\d.]+) calls=([\d.]+)$`)
+	msRe       = regexp.MustCompile(`^([\d.]+) ms$`)
+	jitTotalRe = regexp.MustCompile(`Total ([\d.]+) ms`)
+	kbRe       = regexp.MustCompile(`^(\d+)kB$`)
+	originalRe = regexp.MustCompile(`^(\d+)(?: \(originally (\d+)\))?$`)
 )
 
 // textEntry is an element of the indentation stack: either a plan node or

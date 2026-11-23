@@ -60,7 +60,7 @@ func isTerminal(f *os.File) bool {
 	return isatty.IsTerminal(f.Fd()) || isatty.IsCygwinTerminal(f.Fd())
 }
 
-// exitError carries a specific exit code through cobra.
+// codeError carries a specific exit code through cobra.
 type codeError struct {
 	code int
 	err  error
@@ -113,7 +113,7 @@ It only reads plan text: it never connects to a database or sends data anywhere.
 		Version:       buildVersion(),
 		SilenceUsage:  true,
 		SilenceErrors: true,
-		RunE: func(cmd *cobra.Command, args []string) error {
+		RunE: func(_ *cobra.Command, args []string) error {
 			return execute(e, o, args)
 		},
 	}
@@ -146,7 +146,7 @@ func execute(e *env, o options, args []string) error {
 
 	color := !o.noColor && e.getenv("NO_COLOR") == ""
 	interactive := !o.plain && e.stdoutTTY
-	var keyboard io.Reader = e.stdin
+	keyboard := e.stdin
 	if interactive && !e.stdinTTY {
 		tty, err := e.openTTY()
 		if err != nil {
@@ -201,9 +201,8 @@ func openInput(e *env, args []string) (r io.Reader, name string, closeFn func(),
 		return f, args[0], func() { f.Close() }, nil
 	}
 	if e.stdinTTY {
-		return nil, "", nil, errors.New("no plan to read: pass a file, or pipe EXPLAIN output into pgsight\n" +
-			"  e.g.  psql -c \"EXPLAIN ANALYZE SELECT ...\" | pgsight\n" +
-			"Run pgsight --help for more.")
+		return nil, "", nil, errors.New(`no plan to read: pass a file or pipe EXPLAIN output in, ` +
+			`e.g. psql -c "EXPLAIN ANALYZE SELECT ..." | pgsight (see pgsight --help)`)
 	}
 	return e.stdin, "", func() {}, nil
 }
