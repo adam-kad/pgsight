@@ -1,0 +1,7 @@
+EXPLAIN ANALYZE · text format
+Execution 0.250 ms · Planning 0.013 ms
+No issues found
+
+     SELF      % SHARE       NODE
+ 0.094 ms  37.6% ███▊        HashAggregate  5 rows
+ 0.149 ms  59.6% ██████      └─ Index Scan using customers_pkey on public.customers c  999 rows (est 1.5k)

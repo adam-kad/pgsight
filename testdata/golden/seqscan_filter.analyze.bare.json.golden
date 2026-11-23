@@ -1,0 +1,11 @@
+EXPLAIN ANALYZE · json format
+Execution 26.8 ms · Planning 0.036 ms
+💡 1 warning
+
+     SELF      % SHARE       NODE
+  26.7 ms  99.9% ██████████  Seq Scan on orders 💡  400 rows (est 398)
+
+Hints
+  [warning] Seq Scan on orders
+            Seq Scan on orders read 400,000 rows and kept 400 (0.1%)
+            → An index on the filtered columns may let PostgreSQL skip the rest: (amount = 42.5)

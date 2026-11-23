@@ -13,6 +13,7 @@ CREATE TABLE orders (id int PRIMARY KEY, customer_id int, status text, amount nu
 CREATE INDEX orders_customer_id_idx ON orders (customer_id);
 CREATE INDEX orders_status_idx ON orders (status);
 CREATE TABLE audit_log (order_id int, changed_at timestamptz);
+CREATE TABLE correlated (a int, b int, payload text);
 
 INSERT INTO customers
 SELECT g, (ARRAY['DE','FR','US','RU','BR'])[1 + g % 5], date '2020-01-01' + g % 1500
@@ -23,6 +24,9 @@ SELECT g, 1 + (g::bigint * 7919) % 50000,
        CASE WHEN g % 100 = 0 THEN 'cancelled' WHEN g % 10 = 0 THEN 'pending' ELSE 'done' END,
        (g % 1000) / 10.0, date '2020-01-01' + g % 1500
 FROM generate_series(1, 400000) g;
+
+INSERT INTO correlated SELECT g % 100, g % 100, 'x' FROM generate_series(1, 100000) g;
+ANALYZE correlated;
 
 -- Deliberately stale statistics on customers: analyze before a skewed update.
 ANALYZE orders;
@@ -111,7 +115,42 @@ EXPLAIN SELECT c.country, sum(o.amount) FROM orders o JOIN customers c ON c.id =
 \o join_estimate.plan.json
 EXPLAIN (FORMAT JSON) SELECT c.country, sum(o.amount) FROM orders o JOIN customers c ON c.id = o.customer_id WHERE o.status <> 'cancelled' GROUP BY c.country ORDER BY 2 DESC;
 
--- 10. Bare output without the psql wrapper (as copied from many GUI clients).
+-- 10. Correlated columns: the planner multiplies selectivities and
+--     underestimates the row count by ~100x.
+\o misestimate.analyze.txt
+EXPLAIN (ANALYZE, BUFFERS) SELECT * FROM correlated WHERE a = 7 AND b = 7;
+\o misestimate.analyze.json
+EXPLAIN (ANALYZE, BUFFERS, FORMAT JSON) SELECT * FROM correlated WHERE a = 7 AND b = 7;
+
+-- 11. Inner side of a nested loop that never runs.
+SET enable_hashjoin = off;
+SET enable_mergejoin = off;
+\o never_executed.analyze.txt
+EXPLAIN (ANALYZE, BUFFERS) SELECT * FROM customers c JOIN orders o ON o.customer_id = c.id WHERE c.country = 'XX';
+\o never_executed.analyze.json
+EXPLAIN (ANALYZE, BUFFERS, FORMAT JSON) SELECT * FROM customers c JOIN orders o ON o.customer_id = c.id WHERE c.country = 'XX';
+RESET enable_hashjoin;
+RESET enable_mergejoin;
+
+-- 12. LIMIT stops its child early: estimates below it look wrong but are fine.
+\o limit.analyze.txt
+EXPLAIN (ANALYZE, BUFFERS) SELECT * FROM orders WHERE status = 'done' ORDER BY id LIMIT 10;
+\o limit.analyze.json
+EXPLAIN (ANALYZE, BUFFERS, FORMAT JSON) SELECT * FROM orders WHERE status = 'done' ORDER BY id LIMIT 10;
+
+-- 13. VERBOSE + SETTINGS: schema-qualified names, Output lines, Settings.
+SET random_page_cost = 1.1;
+\o verbose.analyze.txt
+EXPLAIN (ANALYZE, VERBOSE, BUFFERS, SETTINGS) SELECT c.country, count(*) FROM customers c WHERE c.id < 1000 GROUP BY c.country;
+\o verbose.analyze.json
+EXPLAIN (ANALYZE, VERBOSE, BUFFERS, SETTINGS, FORMAT JSON) SELECT c.country, count(*) FROM customers c WHERE c.id < 1000 GROUP BY c.country;
+RESET random_page_cost;
+
+-- 14. COSTS OFF (text only: the node lines carry no statistics).
+\o join_estimate.costs_off.plan.txt
+EXPLAIN (COSTS OFF) SELECT c.country, sum(o.amount) FROM orders o JOIN customers c ON c.id = o.customer_id WHERE o.status <> 'cancelled' GROUP BY c.country ORDER BY 2 DESC;
+
+-- 15. Bare output without the psql wrapper (as copied from many GUI clients).
 \pset tuples_only on
 \pset format unaligned
 \o seqscan_filter.analyze.bare.txt

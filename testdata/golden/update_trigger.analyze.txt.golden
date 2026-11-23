@@ -1,0 +1,7 @@
+EXPLAIN ANALYZE · text format
+Execution 3.56 ms · Planning 0.052 ms · Triggers 1.08 ms
+No issues found
+
+     SELF      % SHARE       NODE
+  2.41 ms  67.7% ██████▊     Update on orders  0 rows
+ 0.042 ms   1.2% ▏           └─ Index Scan using orders_pkey on orders  500 rows (est 487)

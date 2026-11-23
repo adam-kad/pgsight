@@ -8,12 +8,12 @@
        "Partial Mode": "Finalize",                          +
        "Parallel Aware": false,                             +
        "Async Capable": false,                              +
-       "Startup Cost": 7126.59,                             +
-       "Total Cost": 7126.68,                               +
+       "Startup Cost": 7128.86,                             +
+       "Total Cost": 7128.96,                               +
        "Plan Rows": 3,                                      +
        "Plan Width": 45,                                    +
-       "Actual Startup Time": 35.440,                       +
-       "Actual Total Time": 36.281,                         +
+       "Actual Startup Time": 36.453,                       +
+       "Actual Total Time": 37.384,                         +
        "Actual Rows": 3,                                    +
        "Actual Loops": 1,                                   +
        "Group Key": ["status"],                             +
@@ -33,12 +33,12 @@
            "Parent Relationship": "Outer",                  +
            "Parallel Aware": false,                         +
            "Async Capable": false,                          +
-           "Startup Cost": 7126.59,                         +
-           "Total Cost": 7126.62,                           +
+           "Startup Cost": 7128.86,                         +
+           "Total Cost": 7128.89,                           +
            "Plan Rows": 3,                                  +
            "Plan Width": 45,                                +
-           "Actual Startup Time": 35.432,                   +
-           "Actual Total Time": 36.273,                     +
+           "Actual Startup Time": 36.426,                   +
+           "Actual Total Time": 37.358,                     +
            "Actual Rows": 6,                                +
            "Actual Loops": 1,                               +
            "Workers Planned": 1,                            +
@@ -59,12 +59,12 @@
                "Parent Relationship": "Outer",              +
                "Parallel Aware": false,                     +
                "Async Capable": false,                      +
-               "Startup Cost": 7126.58,                     +
-               "Total Cost": 7126.58,                       +
+               "Startup Cost": 7128.85,                     +
+               "Total Cost": 7128.86,                       +
                "Plan Rows": 3,                              +
                "Plan Width": 45,                            +
-               "Actual Startup Time": 33.989,               +
-               "Actual Total Time": 33.989,                 +
+               "Actual Startup Time": 34.932,               +
+               "Actual Total Time": 34.932,                 +
                "Actual Rows": 3,                            +
                "Actual Loops": 2,                           +
                "Sort Key": ["status"],                      +
@@ -97,12 +97,12 @@
                    "Parent Relationship": "Outer",          +
                    "Parallel Aware": false,                 +
                    "Async Capable": false,                  +
-                   "Startup Cost": 7126.51,                 +
-                   "Total Cost": 7126.55,                   +
+                   "Startup Cost": 7128.79,                 +
+                   "Total Cost": 7128.82,                   +
                    "Plan Rows": 3,                          +
                    "Plan Width": 45,                        +
-                   "Actual Startup Time": 33.975,           +
-                   "Actual Total Time": 33.976,             +
+                   "Actual Startup Time": 34.915,           +
+                   "Actual Total Time": 34.916,             +
                    "Actual Rows": 3,                        +
                    "Actual Loops": 2,                       +
                    "Group Key": ["status"],                 +
@@ -138,10 +138,10 @@
                        "Alias": "orders",                   +
                        "Startup Cost": 0.00,                +
                        "Total Cost": 5539.18,               +
-                       "Plan Rows": 211645,                 +
+                       "Plan Rows": 211948,                 +
                        "Plan Width": 11,                    +
-                       "Actual Startup Time": 0.008,        +
-                       "Actual Total Time": 15.970,         +
+                       "Actual Startup Time": 0.009,        +
+                       "Actual Total Time": 16.955,         +
                        "Actual Rows": 179800,               +
                        "Actual Loops": 2,                   +
                        "Filter": "(amount > '10'::numeric)",+
@@ -179,10 +179,10 @@
        "Temp Read Blocks": 0,                               +
        "Temp Written Blocks": 0                             +
      },                                                     +
-     "Planning Time": 0.051,                                +
+     "Planning Time": 0.057,                                +
      "Triggers": [                                          +
      ],                                                     +
-     "Execution Time": 36.295                               +
+     "Execution Time": 37.405                               +
    }                                                        +
  ]
 (1 row)

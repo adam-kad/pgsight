@@ -1,0 +1,7 @@
+EXPLAIN ANALYZE · text format
+Execution 0.013 ms · Planning 0.014 ms
+No issues found
+
+     SELF      % SHARE       NODE
+     0 ms   0.0%             Limit  10 rows
+ 0.009 ms  69.2% ██████▉     └─ Index Scan using orders_pkey on orders  10 rows (est 361k)

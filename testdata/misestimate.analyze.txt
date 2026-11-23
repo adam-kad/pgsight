@@ -1,0 +1,12 @@
+                                                 QUERY PLAN                                                 
+------------------------------------------------------------------------------------------------------------
+ Seq Scan on correlated  (cost=0.00..2041.00 rows=12 width=10) (actual time=0.003..3.733 rows=1000 loops=1)
+   Filter: ((a = 7) AND (b = 7))
+   Rows Removed by Filter: 99000
+   Buffers: shared hit=541
+ Planning:
+   Buffers: shared hit=11
+ Planning Time: 0.051 ms
+ Execution Time: 3.756 ms
+(8 rows)
+

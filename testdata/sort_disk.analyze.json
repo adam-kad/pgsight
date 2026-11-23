@@ -10,8 +10,8 @@
        "Total Cost": 69429.28,                   +
        "Plan Rows": 400000,                      +
        "Plan Width": 23,                         +
-       "Actual Startup Time": 285.884,           +
-       "Actual Total Time": 353.592,             +
+       "Actual Startup Time": 283.460,           +
+       "Actual Total Time": 350.553,             +
        "Actual Rows": 400000,                    +
        "Actual Loops": 1,                        +
        "Sort Key": ["amount DESC", "created_at"],+
@@ -40,8 +40,8 @@
            "Total Cost": 6598.00,                +
            "Plan Rows": 400000,                  +
            "Plan Width": 23,                     +
-           "Actual Startup Time": 0.005,         +
-           "Actual Total Time": 14.116,          +
+           "Actual Startup Time": 0.009,         +
+           "Actual Total Time": 14.401,          +
            "Actual Rows": 400000,                +
            "Actual Loops": 1,                    +
            "Shared Hit Blocks": 2598,            +
@@ -69,10 +69,10 @@
        "Temp Read Blocks": 0,                    +
        "Temp Written Blocks": 0                  +
      },                                          +
-     "Planning Time": 0.040,                     +
+     "Planning Time": 0.037,                     +
      "Triggers": [                               +
      ],                                          +
-     "Execution Time": 365.496                   +
+     "Execution Time": 362.245                   +
    }                                             +
  ]
 (1 row)

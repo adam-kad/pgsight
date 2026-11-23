@@ -1,0 +1,12 @@
+EXPLAIN ANALYZE · text format
+Execution 368.0 ms · Planning 0.043 ms
+💡 1 warning
+
+     SELF      % SHARE       NODE
+ 340.3 ms  92.5% █████████▎  Sort 💡  400k rows
+  14.6 ms   4.0% ▍           └─ Seq Scan on orders  400k rows
+
+Hints
+  [warning] Sort
+            Sort spilled 13.2 MB to disk (external merge)
+            → Increase work_mem for this query so the sort fits in memory, or add an index that returns rows already ordered by amount DESC, created_at.

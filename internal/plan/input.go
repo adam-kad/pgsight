@@ -68,7 +68,33 @@ func clean(raw string) source {
 	src := source{lines: lines[first:last], firstLine: first + 1}
 	stripContinuations(src.lines)
 	dedent(src.lines)
+	stripQuotes(src.lines)
 	return src
+}
+
+// stripQuotes undoes the CSV-style quoting some GUI clients (pgAdmin,
+// DBeaver) add when copying result rows: "Seq Scan on t  (cost=...)".
+// It only applies when every non-empty line is quoted.
+func stripQuotes(lines []string) {
+	quoted := 0
+	for _, l := range lines {
+		if l == "" {
+			continue
+		}
+		if len(l) < 2 || l[0] != '"' || l[len(l)-1] != '"' {
+			return
+		}
+		quoted++
+	}
+	if quoted == 0 {
+		return
+	}
+	for i, l := range lines {
+		if l != "" {
+			lines[i] = strings.ReplaceAll(l[1:len(l)-1], `""`, `"`)
+		}
+	}
+	dedent(lines)
 }
 
 // stripContinuations removes psql's "+" line-continuation markers. They are

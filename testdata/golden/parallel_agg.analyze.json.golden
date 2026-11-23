@@ -1,0 +1,10 @@
+EXPLAIN ANALYZE · json format
+Execution 37.4 ms · Planning 0.057 ms
+No issues found
+
+     SELF      % SHARE       NODE
+ 0.026 ms   0.1% ▏           Finalize GroupAggregate  3 rows
+  2.43 ms   6.5% ▋           └─ Gather Merge  6 rows (est 3)
+ 0.016 ms   0.0% ▏              └─ Sort  3 rows ×2
+  18.0 ms  48.0% ████▊             └─ Partial HashAggregate  3 rows ×2
+  17.0 ms  45.3% ████▌                └─ Parallel Seq Scan on orders  180k rows (est 212k) ×2

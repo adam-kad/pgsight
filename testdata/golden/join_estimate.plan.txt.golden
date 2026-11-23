@@ -1,0 +1,11 @@
+EXPLAIN (estimates only) · text format
+Total cost 13k
+No timing data: shares are of the planner's estimated cost. Run EXPLAIN ANALYZE for real timings and hints.
+
+SELF COST      % SHARE       NODE
+     0.07   0.0% ▏           Sort  est 5 rows
+  1984.84  15.6% █▌          └─ HashAggregate  est 5 rows
+  1978.41  15.5% █▌             └─ Hash Join  est 397k rows
+  7615.55  59.8% ██████            ├─ Seq Scan on orders o  est 397k rows
+     0.00   0.0%                   └─ Hash  est 75k rows
+  1155.08   9.1% ▉                    └─ Seq Scan on customers c  est 75k rows

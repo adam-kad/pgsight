@@ -194,6 +194,9 @@ func jsonStatement(p *Plan, obj *jsonObject) error {
 				return fieldTypeError("", key, "an object", v)
 			}
 			p.JIT = jsonJIT(jo)
+		case "Plan":
+		default:
+			p.Properties = append(p.Properties, Property{Key: key, Value: formatValue(v)})
 		}
 	}
 	return nil

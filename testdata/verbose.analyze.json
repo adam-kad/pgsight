@@ -1,0 +1,95 @@
+                      QUERY PLAN                      
+------------------------------------------------------
+ [                                                   +
+   {                                                 +
+     "Plan": {                                       +
+       "Node Type": "Aggregate",                     +
+       "Strategy": "Hashed",                         +
+       "Partial Mode": "Simple",                     +
+       "Parallel Aware": false,                      +
+       "Async Capable": false,                       +
+       "Startup Cost": 47.75,                        +
+       "Total Cost": 47.80,                          +
+       "Plan Rows": 5,                               +
+       "Plan Width": 11,                             +
+       "Actual Startup Time": 0.233,                 +
+       "Actual Total Time": 0.233,                   +
+       "Actual Rows": 5,                             +
+       "Actual Loops": 1,                            +
+       "Output": ["country", "count(*)"],            +
+       "Group Key": ["c.country"],                   +
+       "Planned Partitions": 0,                      +
+       "HashAgg Batches": 1,                         +
+       "Peak Memory Usage": 24,                      +
+       "Disk Usage": 0,                              +
+       "Shared Hit Blocks": 1009,                    +
+       "Shared Read Blocks": 0,                      +
+       "Shared Dirtied Blocks": 0,                   +
+       "Shared Written Blocks": 0,                   +
+       "Local Hit Blocks": 0,                        +
+       "Local Read Blocks": 0,                       +
+       "Local Dirtied Blocks": 0,                    +
+       "Local Written Blocks": 0,                    +
+       "Temp Read Blocks": 0,                        +
+       "Temp Written Blocks": 0,                     +
+       "Plans": [                                    +
+         {                                           +
+           "Node Type": "Index Scan",                +
+           "Parent Relationship": "Outer",           +
+           "Parallel Aware": false,                  +
+           "Async Capable": false,                   +
+           "Scan Direction": "Forward",              +
+           "Index Name": "customers_pkey",           +
+           "Relation Name": "customers",             +
+           "Schema": "public",                       +
+           "Alias": "c",                             +
+           "Startup Cost": 0.29,                     +
+           "Total Cost": 40.47,                      +
+           "Plan Rows": 1456,                        +
+           "Plan Width": 3,                          +
+           "Actual Startup Time": 0.003,             +
+           "Actual Total Time": 0.141,               +
+           "Actual Rows": 999,                       +
+           "Actual Loops": 1,                        +
+           "Output": ["id", "country", "created_at"],+
+           "Index Cond": "(c.id < 1000)",            +
+           "Rows Removed by Index Recheck": 0,       +
+           "Shared Hit Blocks": 1009,                +
+           "Shared Read Blocks": 0,                  +
+           "Shared Dirtied Blocks": 0,               +
+           "Shared Written Blocks": 0,               +
+           "Local Hit Blocks": 0,                    +
+           "Local Read Blocks": 0,                   +
+           "Local Dirtied Blocks": 0,                +
+           "Local Written Blocks": 0,                +
+           "Temp Read Blocks": 0,                    +
+           "Temp Written Blocks": 0                  +
+         }                                           +
+       ]                                             +
+     },                                              +
+     "Settings": {                                   +
+       "max_parallel_workers_per_gather": "0",       +
+       "parallel_setup_cost": "0",                   +
+       "parallel_tuple_cost": "0",                   +
+       "random_page_cost": "1.1"                     +
+     },                                              +
+     "Planning": {                                   +
+       "Shared Hit Blocks": 0,                       +
+       "Shared Read Blocks": 0,                      +
+       "Shared Dirtied Blocks": 0,                   +
+       "Shared Written Blocks": 0,                   +
+       "Local Hit Blocks": 0,                        +
+       "Local Read Blocks": 0,                       +
+       "Local Dirtied Blocks": 0,                    +
+       "Local Written Blocks": 0,                    +
+       "Temp Read Blocks": 0,                        +
+       "Temp Written Blocks": 0                      +
+     },                                              +
+     "Planning Time": 0.009,                         +
+     "Triggers": [                                   +
+     ],                                              +
+     "Execution Time": 0.237                         +
+   }                                                 +
+ ]
+(1 row)
+

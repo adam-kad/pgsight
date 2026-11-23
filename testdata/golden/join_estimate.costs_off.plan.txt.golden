@@ -1,0 +1,11 @@
+EXPLAIN (estimates only) · text format
+Total cost 0.00
+No timing data: shares are of the planner's estimated cost. Run EXPLAIN ANALYZE for real timings and hints.
+
+SELF COST      % SHARE       NODE
+     0.00   0.0%             Sort  est 0 rows
+     0.00   0.0%             └─ HashAggregate  est 0 rows
+     0.00   0.0%                └─ Hash Join  est 0 rows
+     0.00   0.0%                   ├─ Seq Scan on orders o  est 0 rows
+     0.00   0.0%                   └─ Hash  est 0 rows
+     0.00   0.0%                      └─ Seq Scan on customers c  est 0 rows

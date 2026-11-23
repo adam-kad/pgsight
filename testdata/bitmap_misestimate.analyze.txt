@@ -1,27 +1,27 @@
                                                                  QUERY PLAN                                                                  
 ---------------------------------------------------------------------------------------------------------------------------------------------
- Aggregate  (cost=4351.88..4351.89 rows=1 width=8) (actual time=6.605..6.606 rows=1 loops=1)
+ Aggregate  (cost=4359.11..4359.12 rows=1 width=8) (actual time=6.143..6.143 rows=1 loops=1)
    Buffers: shared hit=3010
-   ->  Hash Join  (cost=1577.17..4349.84 rows=814 width=0) (actual time=6.603..6.604 rows=0 loops=1)
+   ->  Hash Join  (cost=1578.51..4357.11 rows=800 width=0) (actual time=6.142..6.142 rows=0 loops=1)
          Hash Cond: (o.customer_id = c.id)
          Buffers: shared hit=3010
-         ->  Bitmap Heap Scan on orders o  (cost=48.04..2810.01 rows=4080 width=4) (actual time=0.363..1.622 rows=4000 loops=1)
+         ->  Bitmap Heap Scan on orders o  (cost=47.11..2815.31 rows=3960 width=4) (actual time=0.367..1.330 rows=4000 loops=1)
                Recheck Cond: (status = 'cancelled'::text)
                Heap Blocks: exact=2598
                Buffers: shared hit=2604
-               ->  Bitmap Index Scan on orders_status_idx  (cost=0.00..47.02 rows=4080 width=0) (actual time=0.174..0.174 rows=4000 loops=1)
+               ->  Bitmap Index Scan on orders_status_idx  (cost=0.00..46.12 rows=3960 width=0) (actual time=0.177..0.177 rows=4000 loops=1)
                      Index Cond: (status = 'cancelled'::text)
                      Buffers: shared hit=6
-         ->  Hash  (cost=1342.35..1342.35 rows=14942 width=4) (actual time=4.708..4.708 rows=30000 loops=1)
+         ->  Hash  (cost=1342.35..1342.35 rows=15124 width=4) (actual time=4.544..4.544 rows=30000 loops=1)
                Buckets: 32768 (originally 16384)  Batches: 1 (originally 1)  Memory Usage: 1311kB
                Buffers: shared hit=406
-               ->  Seq Scan on customers c  (cost=0.00..1342.35 rows=14942 width=4) (actual time=0.004..3.124 rows=30000 loops=1)
+               ->  Seq Scan on customers c  (cost=0.00..1342.35 rows=15124 width=4) (actual time=0.005..3.026 rows=30000 loops=1)
                      Filter: (country = 'DE'::text)
                      Rows Removed by Filter: 20000
                      Buffers: shared hit=406
  Planning:
-   Buffers: shared hit=16 read=1
- Planning Time: 0.464 ms
- Execution Time: 6.634 ms
+   Buffers: shared hit=17
+ Planning Time: 0.090 ms
+ Execution Time: 6.183 ms
 (23 rows)
 

@@ -1,0 +1,16 @@
+EXPLAIN ANALYZE · json format
+Execution 5.88 ms · Planning 0.051 ms
+💡 1 warning
+
+     SELF      % SHARE       NODE
+     0 ms   0.0%             Aggregate  1 row
+ 0.262 ms   4.5% ▌           └─ Hash Join 💡  0 rows (est 800)
+ 0.931 ms  15.8% █▋             ├─ Bitmap Heap Scan on orders o  4.0k rows (est 4.0k)
+ 0.161 ms   2.7% ▎              │  └─ Bitmap Index Scan on orders_status_idx  4.0k rows (est 4.0k)
+  1.52 ms  25.8% ██▋            └─ Hash  30k rows (est 15k)
+  3.00 ms  50.9% █████▏            └─ Seq Scan on customers c  30k rows (est 15k)
+
+Hints
+  [warning] Hash Join
+            Planner expected 800 rows but got none
+            → Statistics may be stale: run ANALYZE on the tables involved.

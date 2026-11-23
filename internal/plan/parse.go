@@ -13,9 +13,6 @@ const MaxInputSize = 64 << 20
 // ErrEmpty is returned when the input contains no plan at all.
 var ErrEmpty = errors.New("input is empty: expected the output of EXPLAIN or EXPLAIN ANALYZE")
 
-// errTextUnsupported is temporary until the text parser lands.
-var errTextUnsupported = errors.New("text EXPLAIN format is not supported yet; use EXPLAIN (FORMAT JSON)")
-
 // ParseError describes malformed input. Line is 1-based and refers to the
 // input as given, including any psql header; it is 0 when unknown.
 type ParseError struct {
@@ -52,7 +49,7 @@ func ParseString(input string) (*Plan, error) {
 	case FormatJSON:
 		return parseJSON(src)
 	case FormatText:
-		return nil, errTextUnsupported
+		return parseText(src)
 	default:
 		return nil, ErrEmpty
 	}
@@ -63,7 +60,8 @@ func (p *Plan) finish() {
 	for _, n := range p.Nodes() {
 		if n.Actual != nil {
 			p.Analyzed = true
-			return
+			break
 		}
 	}
+	p.computeMetrics()
 }

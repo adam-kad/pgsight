@@ -6,8 +6,8 @@
        "Node Type": "Sort",                                 +
        "Parallel Aware": false,                             +
        "Async Capable": false,                              +
-       "Startup Cost": 12733.02,                            +
-       "Total Cost": 12733.04,                              +
+       "Startup Cost": 12733.94,                            +
+       "Total Cost": 12733.95,                              +
        "Plan Rows": 5,                                      +
        "Plan Width": 35,                                    +
        "Sort Key": ["(sum(o.amount)) DESC"],                +
@@ -19,8 +19,8 @@
            "Parent Relationship": "Outer",                  +
            "Parallel Aware": false,                         +
            "Async Capable": false,                          +
-           "Startup Cost": 12732.90,                        +
-           "Total Cost": 12732.97,                          +
+           "Startup Cost": 12733.82,                        +
+           "Total Cost": 12733.88,                          +
            "Plan Rows": 5,                                  +
            "Plan Width": 35,                                +
            "Group Key": ["c.country"],                      +
@@ -33,8 +33,8 @@
                "Async Capable": false,                      +
                "Join Type": "Inner",                        +
                "Startup Cost": 2091.43,                     +
-               "Total Cost": 10748.73,                      +
-               "Plan Rows": 396835,                         +
+               "Total Cost": 10749.04,                      +
+               "Plan Rows": 396955,                         +
                "Plan Width": 9,                             +
                "Inner Unique": true,                        +
                "Hash Cond": "(o.customer_id = c.id)",       +
@@ -48,7 +48,7 @@
                    "Alias": "o",                            +
                    "Startup Cost": 0.00,                    +
                    "Total Cost": 7615.55,                   +
-                   "Plan Rows": 396835,                     +
+                   "Plan Rows": 396955,                     +
                    "Plan Width": 10,                        +
                    "Filter": "(status <> 'cancelled'::text)"+
                  },                                         +

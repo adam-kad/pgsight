@@ -33,6 +33,11 @@ type Plan struct {
 	// least one node carries actual run-time statistics.
 	Analyzed bool
 
+	// Metric says whether node Inclusive/Exclusive values are milliseconds
+	// or cost units, and Total is the value that counts as 100%.
+	Metric Metric
+	Total  float64
+
 	// PlanningTime and ExecutionTime are in milliseconds; nil when absent.
 	PlanningTime  *float64
 	ExecutionTime *float64
@@ -43,6 +48,10 @@ type Plan struct {
 
 	Triggers []Trigger
 	JIT      *JIT
+
+	// Properties keeps other statement-level details, such as "Settings"
+	// or "Query Identifier", for display.
+	Properties []Property
 
 	// Warnings collects non-fatal problems found while parsing, such as
 	// extra plans in the input that were ignored.
@@ -176,6 +185,13 @@ type Node struct {
 
 	Properties []Property
 	Children   []*Node
+
+	// Computed after parsing; see Plan.computeMetrics. Values are in the
+	// plan's Metric (milliseconds or cost units).
+	Inclusive        float64 // this node and everything below it
+	Exclusive        float64 // this node alone
+	InclusivePercent float64 // of Plan.Total
+	ExclusivePercent float64 // of Plan.Total
 }
 
 // Walk visits n and its descendants in depth-first pre-order. depth is 0 for
