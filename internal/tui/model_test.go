@@ -167,6 +167,13 @@ func TestDetailsPanel(t *testing.T) {
 	if n := len(strings.Split(view, "\n")); n != 30 {
 		t.Errorf("view has %d lines, want 30", n)
 	}
+	// The panel sits right under the tree, not at the bottom of the screen.
+	lines := strings.Split(view, "\n")
+	for i, l := range lines {
+		if strings.HasPrefix(l, "── Hash") && !strings.Contains(lines[i-1], "Seq Scan on customers c") {
+			t.Errorf("details panel is not directly under the tree:\n%s", view)
+		}
+	}
 	m = send(m, keys("esc")...)
 	if strings.Contains(ansi.Strip(m.View()), "temp written=146") {
 		t.Error("esc should close the details panel")

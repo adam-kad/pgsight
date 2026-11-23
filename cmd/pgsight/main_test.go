@@ -92,7 +92,7 @@ func TestErrors(t *testing.T) {
 		stdin string
 		msg   string
 	}{
-		{[]string{"/does/not/exist"}, "", "no such file"},
+		{[]string{"does-not-exist.txt"}, "", "open does-not-exist.txt"}, // OS-specific wording follows
 		{nil, "garbage\n", "line 1: expected a plan node"},
 		{[]string{testdata + "gen/generate.sql"}, "", "generate.sql: invalid text plan at line 1"},
 		{[]string{"--fail-on=fatal", testdata + "limit.analyze.txt"}, "", "--fail-on"},

@@ -50,7 +50,7 @@ func Details(p *plan.Plan, n *plan.Node) []Field {
 			}
 			add("Rows", rows)
 			if a.TotalTime > 0 {
-				add("Actual time", fmt.Sprintf("%s..%s per loop", trimFloat(a.StartupTime), Duration(a.TotalTime)))
+				add("Actual time", fmt.Sprintf("%s..%s ms per loop", trimFloat(a.StartupTime), trimFloat(a.TotalTime)))
 			}
 		}
 	}

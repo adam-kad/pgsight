@@ -1,0 +1,15 @@
+# Binaries
+/pgsight
+/pgsight.exe
+*.test
+
+# Build and release output
+/dist/
+coverage.out
+coverage.html
+
+# Editors and OS
+.idea/
+.vscode/
+*.swp
+.DS_Store

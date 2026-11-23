@@ -230,22 +230,24 @@ func (m Model) View() string {
 	}
 	b.WriteString(ansi.Truncate(m.theme.ColumnHeader(m.plan), m.width, "…") + "\n")
 
-	h := m.treeHeight()
-	for i := m.offset; i < m.offset+h; i++ {
-		if i < len(m.rows) {
-			r := m.rows[i]
-			b.WriteString(m.theme.RenderRow(m.plan, r, render.RowOptions{
-				Markers: true, Width: m.width, Selected: i == m.cursor, Hints: len(m.byNode[r.Node]),
-			}))
-		}
-		b.WriteByte('\n')
+	// The details panel follows the last visible row directly; blank lines
+	// go below it so the help line stays at the bottom of the screen.
+	h, dh := m.treeHeight(), m.detailsHeight()
+	written := 0
+	for i := m.offset; i < min(m.offset+h, len(m.rows)); i++ {
+		r := m.rows[i]
+		b.WriteString(m.theme.RenderRow(m.plan, r, render.RowOptions{
+			Markers: true, Width: m.width, Selected: i == m.cursor, Hints: len(m.byNode[r.Node]),
+		}) + "\n")
+		written++
 	}
-
-	if h := m.detailsHeight(); h > 0 {
-		for _, l := range fit(m.detailContent(), h, m.theme) {
+	if dh > 0 {
+		for _, l := range fit(m.detailContent(), dh, m.theme) {
 			b.WriteString(l + "\n")
+			written++
 		}
 	}
+	b.WriteString(strings.Repeat("\n", max(0, h+dh-written)))
 	b.WriteString(m.footer())
 	return b.String()
 }
@@ -278,14 +280,11 @@ func (m Model) detailContent() []string {
 	return lines
 }
 
-// fit cuts lines to exactly height, noting how many were left out.
+// fit cuts lines to at most height, noting how many were left out.
 func fit(lines []string, height int, t *render.Theme) []string {
 	if len(lines) > height {
 		more := len(lines) - height + 1
 		lines = append(lines[:height-1:height-1], t.Dim.Render(fmt.Sprintf("… %d more lines (make the window taller)", more)))
-	}
-	for len(lines) < height {
-		lines = append(lines, "")
 	}
 	return lines
 }
